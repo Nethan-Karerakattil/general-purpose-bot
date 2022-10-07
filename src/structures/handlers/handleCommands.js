@@ -1,0 +1,35 @@
+const fs = require("node:fs");
+const { REST } = require("@discordjs/rest");
+const { Routes } = require("discord-api-types/v9");
+
+module.exports = client => {
+    client.handleCommands = async () => {
+        const commandFolders = fs.readdirSync("./src/commands");
+        for(const folder of commandFolders){
+            const commandFile = fs.readdirSync(`./src/commands/${folder}`)
+
+            for(const file of commandFile){
+                const command = require(`../../commands/${folder}/${file}`);
+
+                client.commands.set(command.data.name, command);
+                client.commandsArr.push(command.data.toJSON());
+            }
+        }
+        
+        const clientID = "916599817818497044";
+
+        const rest = new REST({ version: 9 }).setToken(process.env.token);
+
+        try{
+            console.log(`[ Started refreshing ${client.commandsArr.length} commands ]`);
+
+            const data = await rest.put(Routes.applicationCommands(clientID), {
+                body: client.commandsArr
+            })
+
+            console.log(`[ Refreshed ${data.length} application commands ]`);
+        }catch(err){
+            console.error(err);
+        }
+    }
+}
