@@ -22,6 +22,7 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle("Insufficient Permissions")
                         .setDescription("You do not have the permissions to kick a member")
+                        .setColor(0xdf2c14)
                 ]
             })
 
@@ -30,6 +31,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to kick")
                     .setDescription("I am not allowed to kick this member")
+                    .setColor(0xdf2c14)
             ]
         })
 
@@ -38,6 +40,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to kick")
                     .setDescription("You cannot kick yourself")
+                    .setColor(0xdf2c14)
             ]
         })
 

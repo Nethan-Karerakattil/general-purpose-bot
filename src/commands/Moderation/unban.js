@@ -21,6 +21,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle("Insufficient Permissions")
                             .setDescription("You do not have the permission to unban members")
+                            .setColor(0xdf2c14)
                     ]
                 })
 
@@ -32,6 +33,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle("Unknown Ban")
                             .setDescription("The person who you were trying to unban is not banned")
+                            .setColor(0xdf2c14)
                     ]
                 })
 
@@ -40,6 +42,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle("Unknown Error")
                             .setDescription("Something went wrong when trying to execute this command")
+                            .setColor(0xdf2c14)
                     ]
                 })
 

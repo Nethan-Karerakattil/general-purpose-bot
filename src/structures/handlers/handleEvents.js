@@ -18,8 +18,18 @@ module.exports = client => {
                     }
 
                     break;
+
+                case "player":
+                    for(const file of eventFiles){
+                        const event = require(`../../events/${folder}/${file}`);
+
+                        client.player.on(event.name, (...args) =>
+                            event.execute(...args, client));
+                    }
+
+                    break;
                 default:
-                    console.log("Something went wrong");
+                    console.log("Something went wrong at handleEvents.js")
                     break;
             }
         }

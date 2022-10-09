@@ -35,6 +35,7 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle("Insufficient Permissions")
                         .setDescription("You do not have the permission to mute members")
+                        .setColor(0xdf2c14)
                 ]
             })
 
@@ -43,6 +44,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to Mute")
                     .setDescription("I am not allowed to mute the owner")
+                    .setColor(0xdf2c14)
             ]
         })
 
@@ -51,6 +53,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to Mute")
                     .setDescription("You cannot mute yourself")
+                    .setColor(0xdf2c14)
             ]
         })
 
@@ -62,6 +65,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle("Insufficient Permissions")
                             .setDescription("I do not have the permission to ban mute member")
+                            .setColor(0xdf2c14)
                     ]
                 })
 
@@ -72,6 +76,7 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle("Unknown Error")
                         .setDescription("Something went wrong when trying to execute this command")
+                        .setColor(0xdf2c14)
                 ]
             })
         })

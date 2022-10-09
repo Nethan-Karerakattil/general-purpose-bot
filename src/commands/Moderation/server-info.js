@@ -6,11 +6,12 @@ module.exports = {
         .setDescription("Shows server stats"),
 
     async execute(interaction, client){
-        let { member, guild } = interaction;
+        const { guild } = interaction;
 
         const createdAt = new Date(guild.createdAt);
         const date = `${createdAt.getDate()}/${createdAt.getMonth()}/${createdAt.getFullYear()}`;
         const day = `${createdAt.getHours()}:${createdAt.getMinutes()}:${createdAt.getSeconds()}`;
+
         const owner = await guild.fetchOwner();
         const rulesChannel = client.channels.cache.get(guild.rulesChannelId) || "No Rules Channel"
 

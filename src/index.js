@@ -2,10 +2,12 @@ require("dotenv").config();
 
 const { Client, Collection } = require("discord.js");
 const fs = require("node:fs");
+const { player, Player } = require("discord-music-player");
 
 const client = new Client({ intents: 98045 });
 
 client.commands = new Collection();
+client.player = new Player(client);
 client.commandsArr = [];
 
 const functionFolders = fs.readdirSync("./src/structures");

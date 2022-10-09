@@ -32,6 +32,7 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle("Insufficient Permissions")
                         .setDescription("You do not have the permission to ban members")
+                        .setColor(0xdf2c14)
                 ]
             })
 
@@ -40,6 +41,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to ban")
                     .setDescription("I am not allowed to ban this member")
+                    .setColor(0xdf2c14)
             ]
         })
 
@@ -48,6 +50,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to ban")
                     .setDescription("You cannot ban yourself")
+                    .setColor(0xdf2c14)
             ]
         })
 

@@ -21,6 +21,7 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle("Insufficient Permissions")
                         .setDescription("You do not have the permission to unmute members")
+                        .setColor(0xdf2c14)
                 ]
             })
 
@@ -29,6 +30,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to unmute")
                     .setDescription("I am not allowed to unmute the owner")
+                    .setColor(0xdf2c14)
             ]
         })
 
@@ -37,6 +39,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Unable to unmute")
                     .setDescription("You cannot unmute yourself")
+                    .setColor(0xdf2c14)
             ]
         })
 
@@ -49,6 +52,7 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle("Something went wrong")
                         .setDescription("Something went wrong when trying to execute this command")
+                        .setColor(0xdf2c14)
                 ]
             })
         })
