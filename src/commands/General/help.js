@@ -9,7 +9,7 @@ module.exports = {
     async execute(interaction, client){
         let helpMsg = new EmbedBuilder()
             .setTitle("Here are my commands")
-            .setColor(0x3ded97)
+            .setColor(0x4e5d94)
             .setFooter({ text: "Created By NASTYBOI#6205" });
 
         const commandFolders = fs.readdirSync("./src/commands/");

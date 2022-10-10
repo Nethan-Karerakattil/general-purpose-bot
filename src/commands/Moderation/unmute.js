@@ -12,7 +12,6 @@ module.exports = {
 
     async execute(interaction, client){
         const { member, guild } = interaction;
-
         const target = interaction.options.getMember("user");
 
         if(!member.permissions.has(PermissionsBitField.Flags.MuteMembers))

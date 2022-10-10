@@ -10,7 +10,7 @@ module.exports = {
             embeds: [
                 new EmbedBuilder()
                     .setTitle("Pong!")
-                    .setColor(0x3ded97)
+                    .setColor(0x4e5d94)
                     .setFooter({ text: "Created By NASTYBOI#6205" })
             ]
         })
