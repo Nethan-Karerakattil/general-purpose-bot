@@ -43,6 +43,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle(`New Slowmode is ${slowmode}`)
                     .setDescription(`New Slowmode: ${slowmode}\nChannel: ${targetChannel}\nReason: ${reason}`)
+                    .setFooter({ text: "Created By NASTYBOI#6205" })
             ]
         })
     }
