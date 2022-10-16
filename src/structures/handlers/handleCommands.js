@@ -20,8 +20,6 @@ module.exports = client => {
         const rest = new REST({ version: 9 }).setToken(process.env.token);
 
         try{
-            console.log(`[ Started refreshing ${client.commandsArr.length} commands ]`);
-
             const data = await rest.put(Routes.applicationCommands(config.client_id), {
                 body: client.commandsArr
             })

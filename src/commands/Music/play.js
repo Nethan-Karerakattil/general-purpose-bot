@@ -1,4 +1,5 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle }
+    = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,6 +15,9 @@ module.exports = {
             .setDescription("Playlist URL")),
 
     async execute(interaction, client){
+        const song = await interaction.options.getString("song");
+        const playlist = await interaction.options.getString("playlist");
+
         if(!interaction.member.voice.channel) return await interaction.editReply({
             embeds: [
                 new EmbedBuilder()
@@ -23,20 +27,16 @@ module.exports = {
             ]
         })
 
-        if(!interaction.options.getString("song") && !interaction.options.getString("playlist"))
-            return await interaction.editReply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setTitle("Choose atleast one option")
-                        .setDescription("You must choose atleast one option for the command to work")
-                        .setColor(0xdf2c14)
-                ]
-            })
+        if(!song && !playlist) return await interaction.editReply({
+            embeds: [
+                new EmbedBuilder()
+                    .setTitle("Choose atleast one option")
+                    .setDescription("You must choose atleast one option for the command to work")
+                    .setColor(0xdf2c14)
+            ]
+        })
 
-        const queue = await client.player.createQueue(interaction.guild.id, { data: {
-            playCommand: true,
-            originalChannel: interaction.channel.id
-        }});
+        const queue = await client.player.createQueue(interaction.guild.id);
 
         await queue.join(interaction.member.voice.channel);
 
@@ -66,7 +66,7 @@ module.exports = {
                 ]
             })
 
-            return console.log(err);
+            throw err;
         }
 
         async function playMsg(type){
@@ -79,5 +79,60 @@ module.exports = {
                 ]
             })
         }
+
+        queue.setData({
+            getQueueMsg: async (queueMin, guildQueue) => {
+                let embed = new EmbedBuilder()
+                    .setFooter({ text: "Created By NASTYBOI#6205" })
+                    .setColor(0x4e5d94);
+    
+                for(let i = queueMin; i < queueMin + 10; i++){
+                    if(!guildQueue.songs[i]) break;
+    
+                    if(i == 0)
+                        embed.setTitle(`__Currently Playing__: ${guildQueue.songs[i].name}`)
+                        .setDescription(`${guildQueue.songs[i].duration}\n------------------------------------------------------------`)
+            
+                    else embed.addFields({
+                        name: `${i}. ${guildQueue.songs[i].name}`,
+                        value: guildQueue.songs[i].duration
+                    })
+                }
+    
+                const buttons = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId("queue-full-backward")
+                            .setLabel("⏮️")
+                            .setStyle(ButtonStyle.Primary),
+    
+                        new ButtonBuilder()
+                            .setCustomId("queue-backward")
+                            .setLabel("◀️")
+                            .setStyle(ButtonStyle.Primary),
+    
+                        new ButtonBuilder()
+                            .setCustomId("queue-forward")
+                            .setLabel("▶️")
+                            .setStyle(ButtonStyle.Primary),
+    
+                        new ButtonBuilder()
+                            .setCustomId("queue-full-forward")
+                            .setLabel("⏭️")
+                            .setStyle(ButtonStyle.Primary),
+                    
+                        new ButtonBuilder()
+                            .setCustomId("queue-delete")
+                            .setLabel("🗑️")
+                            .setStyle(ButtonStyle.Danger)
+                    )
+
+                guildQueue.data.prevQueueMin = queueMin;
+
+                return { embeds: [embed], components: [buttons] };
+            },
+            prevQueueMin: 0,
+            originalChannel: interaction.channel.id
+        })
     }
 }

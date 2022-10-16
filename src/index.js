@@ -2,13 +2,14 @@ require("dotenv").config();
 
 const { Client, Collection } = require("discord.js");
 const fs = require("node:fs");
-const { player, Player } = require("discord-music-player");
+const { Player } = require("discord-music-player");
 const mongoose = require("mongoose");
 
 const client = new Client({ intents: 98045 });
 mongoose.connect("mongodb://localhost:27017/general-purpose-bot");
 
 client.commands = new Collection();
+client.buttons = new Collection();
 client.player = new Player(client);
 client.commandsArr = [];
 
@@ -24,5 +25,6 @@ for(const folder of functionFolders){
 
 client.handleEvents();
 client.handleCommands();
+client.handleComponents();
 
 client.login(process.env.token);

@@ -1,5 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle }
-    = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,62 +16,17 @@ module.exports = {
 
         const guildQueue = client.player.getQueue(interaction.guild.id);
 
-        if(!guildQueue?.data) return await interaction.editReply({
+        await interaction.editReply(
+            await guildQueue.data.getQueueMsg(0, guildQueue)
+        )
+
+        setTimeout(() => interaction.editReply({
             embeds: [
                 new EmbedBuilder()
-                    .setTitle("You must use the Play Command")
-                    .setDescription("You must use the Play Command before writting the Queue Command")
+                    .setTitle("Message Timed Out")
+                    .setDescription("The Message has Timed Out to save resources")
+                    .setColor(0xdf2c14)
             ]
-        })
-
-        let embed = new EmbedBuilder()
-            .setFooter({ text: "Created By NASTYBOI#6205" })
-            .setColor(0x3ded97);
-
-        for(let i = 0; i < 11; i++){
-            if(!guildQueue.songs[i]) break;
-
-            if(i == 0)
-                embed.setTitle(`__Currently Playing__: ${guildQueue.songs[i].name}`)
-                .setDescription(`${guildQueue.songs[i].duration}\n------------------------------------------------------------`)
-        
-            else embed.addFields({
-                name: `${i}. ${guildQueue.songs[i].name}`,
-                value: guildQueue.songs[i].duration
-            })
-        }
-
-        const buttons = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId("full-backward")
-                    .setLabel("⏮️")
-                    .setStyle(ButtonStyle.Primary),
-
-                new ButtonBuilder()
-                    .setCustomId("backward")
-                    .setLabel("◀️")
-                    .setStyle(ButtonStyle.Primary),
-
-                new ButtonBuilder()
-                    .setCustomId("forward")
-                    .setLabel("▶️")
-                    .setStyle(ButtonStyle.Primary),
-
-                new ButtonBuilder()
-                    .setCustomId("full-forward")
-                    .setLabel("⏭️")
-                    .setStyle(ButtonStyle.Primary),
-                
-                new ButtonBuilder()
-                    .setCustomId("delete")
-                    .setLabel("🗑️")
-                    .setStyle(ButtonStyle.Danger)
-            )
-
-        await interaction.editReply({
-            embeds: [ embed ],
-            components: [ buttons ]
-        })
+        }), 300000);
     }
 }
