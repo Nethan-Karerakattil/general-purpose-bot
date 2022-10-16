@@ -25,8 +25,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle("Something went wrong")
                             .setDescription("Something went wrong when trying to execute this command")
-                    ],
-                    ephemeral: true
+                    ]
                 })
             }
         }else if (interaction.isButton()) {
@@ -46,8 +45,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle("Something went wrong.")
                             .setDescription("Something went wrong when trying to execute this command")
-                    ],
-                    ephemeral: true
+                    ]
                 })
             }
         }
