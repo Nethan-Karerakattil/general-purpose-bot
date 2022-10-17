@@ -10,10 +10,10 @@ module.exports = {
 
         const createdAt = new Date(guild.createdAt);
         const date = `${createdAt.getDate()}/${createdAt.getMonth()}/${createdAt.getFullYear()}`;
-        const day = `${createdAt.getHours()}:${createdAt.getMinutes()}:${createdAt.getSeconds()}`;
+        const time = `${createdAt.getHours()}:${createdAt.getMinutes()}:${createdAt.getSeconds()}`;
 
         const owner = await guild.fetchOwner();
-        const rulesChannel = client.channels.cache.get(guild.rulesChannelId) || "No Rules Channel"
+        const rulesChannel = client.channels.cache.get(guild.rulesChannelId)
 
         await interaction.editReply({
             embeds: [
@@ -40,12 +40,12 @@ module.exports = {
                         },
                         {
                             name: "Rules Channel",
-                            value: rulesChannel.name || rulesChannel,
+                            value: rulesChannel.name || "No Rules Channel",
                             inline: true
                         },
                         {
                             name: "Created At",
-                            value: date + " " + day,
+                            value: date + " " + time,
                             inline: true
                         },
                         {
