@@ -26,7 +26,8 @@ module.exports = {
                     .setTitle("Message Timed Out")
                     .setDescription("The Message has Timed Out to save resources")
                     .setColor(0xdf2c14)
-            ]
+            ],
+            components: []
         }), 300000);
     }
 }

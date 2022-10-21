@@ -4,7 +4,7 @@ module.exports = {
     name: "clientDisconnect",
 
     async execute(queue, client){
-        const channel = client.channels.cache.get(queue.data.originalChannel);
+        const channel = queue.data.originalChannel
 
         await channel.send({
             embeds: [

@@ -132,7 +132,7 @@ module.exports = {
                 return { embeds: [embed], components: [buttons] };
             },
             prevQueueMin: 0,
-            originalChannel: interaction.channel.id
+            originalChannel: interaction.channel
         })
     }
 }

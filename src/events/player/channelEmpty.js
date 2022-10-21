@@ -4,7 +4,7 @@ module.exports = {
     name: "channelEmpty",
 
     async execute(queue, client){
-        const channel = client.channels.cache.get(queue.data.originalChannel);
+        const channel = queue.data.originalChannel
 
         channel.send({
             embeds: [

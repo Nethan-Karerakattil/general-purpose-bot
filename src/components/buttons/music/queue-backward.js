@@ -2,19 +2,21 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     data: {
-        name: "queue-full-forward"
+        name: "queue-backward"
     },
 
     async execute(interaction, client){
         const guildQueue = client.player.getQueue(interaction.guild.id);
-        const queueStart = Math.floor(guildQueue.songs.length / 10) * 10;
+        const queueStart = guildQueue.data.prevQueueMin - 10;
 
         if(!interaction.member.voice.channel) return await interaction.reply({
             embeds: [
                 new EmbedBuilder()
-                    .setTitle("You arent in the Voice Channel")
-                    .setDescription("You must be apart of the call to execute this command")
-            ]
+                    .setTitle("No Voice Channel Detected")
+                    .setDescription("You must be apart of the call to click this button")
+                    .setColor(0xdf2c14)
+            ],
+            ephemeral: true
         })
 
         await interaction.update(
