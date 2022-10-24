@@ -74,7 +74,7 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(`Added the ${type} to the queue`)
-                        .setFooter({ text: "Created By NASTYBOI#6205" })
+                        .setFooter({ text: "Created By Strange Cat#6205" })
                         .setColor(0x3ded97)
                 ]
             })
@@ -83,7 +83,7 @@ module.exports = {
         queue.setData({
             getQueueMsg: async (queueMin, guildQueue) => {
                 let embed = new EmbedBuilder()
-                    .setFooter({ text: "Created By NASTYBOI#6205" })
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x4e5d94);
     
                 for(let i = queueMin; i < queueMin + 10; i++){

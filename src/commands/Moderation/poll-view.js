@@ -19,6 +19,7 @@ module.exports = {
             let initialMessage = new EmbedBuilder()
                 .setTitle(data.question)
                 .setColor(0x4e5d94)
+                .setFooter({ text: "Created By Strange Cat#6205" })
 
             let totalVotes = 0;
 

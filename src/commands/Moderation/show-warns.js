@@ -40,14 +40,14 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle("No warnings")
                         .setDescription("This user does not have any warnings")
-                        .setFooter({ text: "Created By NASTYBOI#6205" })
+                        .setFooter({ text: "Created By Strange Cat#6205" })
                         .setColor(0x4e5d94)
                 ]
             })
 
             let embed = new EmbedBuilder()
                 .setTitle(`Warnings for ${user.tag}`)
-                .setFooter({ text: "Created By NASTYBOI#6205" })
+                .setFooter({ text: "Created By Strange Cat#6205" })
                 .setColor(0x4e5d94);
 
             for(let i = 0; i < data.warns.length; i++){

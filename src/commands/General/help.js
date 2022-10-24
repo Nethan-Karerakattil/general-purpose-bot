@@ -10,7 +10,7 @@ module.exports = {
         let initialMessage = new EmbedBuilder()
             .setTitle("Here are my Commands!")
             .setColor(0x4e5d94)
-            .setFooter({ text: "Created By NASTYBOI#6205" })
+            .setFooter({ text: "Created By Strange Cat#6205" })
 
         const folders = fs.readdirSync("./src/commands");
         for(const folder of folders){

@@ -32,7 +32,7 @@ module.exports = {
             embeds: [
                 new EmbedBuilder()
                     .setTitle("Loop has been toggled off")
-                    .setFooter({ text: "Created By NASTYBOI#6205" })
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x3ded97)
             ]
         })

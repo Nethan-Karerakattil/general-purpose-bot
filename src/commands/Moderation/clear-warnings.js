@@ -25,7 +25,7 @@ module.exports = {
             ]
         })
 
-        warnModel.findOne({ user_id: user.id }, async (err, data) => {
+        warnModel.deleteOne({ user_id: user.id }, async err => {
             if(err) return await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
@@ -35,15 +35,11 @@ module.exports = {
                 ]
             })
 
-            data.warns = [];
-
-            await data.save();
-
             await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(`Cleared Warnings for ${user.tag}`)
-                        .setFooter({ text: "Created By NASTYBOI#6205" })
+                        .setFooter({ text: "Created By Strange Cat#6205" })
                         .setColor(0x3ded97)
                 ]
             })

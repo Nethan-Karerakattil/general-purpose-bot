@@ -86,7 +86,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle(`Successfully Muted ${target.user.username}#${target.user.discriminator}`)
                     .setDescription(`${target.user.username}#${target.user.discriminator} was muted for ${duration} days`)
-                    .setFooter({ text: "Created By NASTYBOI#6205" })
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x3ded97)
             ]
         })

@@ -17,7 +17,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle(`${user.username}'s Avatar`)
                     .setImage(user.avatarURL() || "https://i.imgur.com/75WC2s4.png")
-                    .setFooter({ text: "Created By NASTYBOI#6205" })
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x4e5d94)
             ]
         })

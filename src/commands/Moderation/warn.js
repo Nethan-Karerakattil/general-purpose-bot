@@ -93,7 +93,7 @@ module.exports = {
                         .setTitle(`Warned ${target.tag}`)
                         .setDescription(`Gave a warn to ${target}
                         Reason: ${reason}`)
-                        .setFooter({ text: "Created By NASTYBOI#6205" })
+                        .setFooter({ text: "Created By Strange Cat#6205" })
                         .setColor(0x4e5d94)
                 ]
             })

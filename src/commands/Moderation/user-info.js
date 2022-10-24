@@ -62,6 +62,8 @@ module.exports = {
                             inline: true
                         }
                     )
+
+                    .setFooter({ text: "Created By Strange Cat#6205" })
             ]
         })
     }

@@ -39,6 +39,15 @@ module.exports = {
         const question = interaction.options.getString("question");
         const time = interaction.options.getNumber("days");
 
+        if(time <= 15) return await interaction.editReply({
+            embeds: [
+                new EmbedBuilder()
+                    .setTitle("Time is too big")
+                    .setDescription("Time must be below 15 days")
+            ],
+            ephemeral: true
+        })
+
         let initialMessage = new EmbedBuilder()
             .setTitle(question)
             .setColor(0x4e5d94);
@@ -108,7 +117,8 @@ module.exports = {
         async function handleSuccess(data){
             let successEmbed = new EmbedBuilder()
                 .setTitle("Poll Ended!")
-                .setDescription(question);
+                .setDescription(question)
+                .setFooter({ text: "Created By Strange Cat#6205" })
 
             for(const option of data.options){
                 successEmbed.addFields({ name: option.name, value: `Votes: ${option.votes.length}` })

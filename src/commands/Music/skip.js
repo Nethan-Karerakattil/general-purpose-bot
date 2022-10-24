@@ -39,7 +39,7 @@ module.exports = {
                 embeds: [
                     new EmbedBuilder()
                         .setTitle("Skipped the Song")
-                        .setFooter({ text: "Created By NASTYBOI#6205" })
+                        .setFooter({ text: "Created By Strange Cat#6205" })
                         .setColor(0x3ded97)
                 ]
             })

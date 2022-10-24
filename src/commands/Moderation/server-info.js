@@ -70,7 +70,7 @@ module.exports = {
                         }
                     )
 
-                    .setFooter({ text: "Created By NASTYBOI#6205" })
+                    .setFooter({ text: "Created By Strange Cat#6205" })
             ]
         })
 
