@@ -100,7 +100,8 @@ module.exports = {
                             .setTitle("Its not your turn")
                             .setDescription("The other player is still thinking. Wait for him to make a move")
                             .setColor(0xdf2c14)
-                    ]
+                    ],
+                    ephemeral: true
                 })
                 
                 data.board[buttonID].stat = 1;
@@ -129,33 +130,13 @@ module.exports = {
             }
 
             const checkPlayer1Victory = await checkWinner(data.board, 1);
-            if(checkPlayer1Victory == "tie") return await interaction.update({
-                embeds: [
-                    new EmbedBuilder()
-                        .setTitle("🎉 Tie! 🎉")
-                        .setColor(0x3ded97)
-                ],
-                components: []
-            })
-
-            if(checkPlayer1Victory) return await interaction.update({
-                embeds: [
-                    new EmbedBuilder()
-                        .setTitle("🎉 Player 1 Won! 🎉")
-                        .setColor(0x3ded97)
-                ],
-                components: []
-            })
-
             const checkPlayer2Victory = await checkWinner(data.board, 2);
-            if(checkPlayer2Victory) return await interaction.update({
-                embeds: [
-                    new EmbedBuilder()
-                        .setTitle("🎉 Player 2 Won! 🎉")
-                        .setColor(0x3ded97)
-                ],
-                components: []
-            })
+
+            if(checkPlayer1Victory === "tie" && checkPlayer2Victory === "tie")
+                return endGame("tie");
+
+            if(checkPlayer1Victory) return endGame(1);
+            if(checkPlayer2Victory) return endGame(2);
 
             return reloadMessage(embedTitle, data, interaction);
         })
@@ -234,6 +215,42 @@ module.exports = {
                 ],
                 components: components
             })
+        }
+
+        async function endGame(result){
+            switch(result){
+                case "tie":
+                    await interaction.update({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setTitle("🎉 Tie! 🎉")
+                                .setColor(0x3ded97)
+                        ],
+                        components: []
+                    })
+
+                    break;
+                case 1:
+                    await interaction.update({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setTitle("🎉 Player 1 Won! 🎉")
+                                .setColor(0x3ded97)
+                        ],
+                        components: []
+                    })
+
+                    break;
+                case 2:
+                    await interaction.update({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setTitle("🎉 Player 2 Won! 🎉")
+                                .setColor(0x3ded97)
+                        ],
+                        components: []
+                    })
+            }
         }
     }
 }
