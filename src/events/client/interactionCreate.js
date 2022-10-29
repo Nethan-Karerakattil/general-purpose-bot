@@ -40,7 +40,7 @@ module.exports = {
             }catch(err){
                 console.log(err);
 
-                return await interaction.editReply({
+                return await interaction.reply({
                     embeds: [
                         new EmbedBuilder()
                             .setTitle("Something went wrong.")

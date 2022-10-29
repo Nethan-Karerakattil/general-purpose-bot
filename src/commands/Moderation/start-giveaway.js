@@ -108,7 +108,7 @@ module.exports = {
 
                 handleSuccess(data);
             })
-        }, days * 8645)
+        }, days * 86400000)
 
         async function handleSuccess(data){
             const { joinedUsers } = data;
