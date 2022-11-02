@@ -11,8 +11,8 @@ module.exports = model("ticModel", new Schema({
         required: [ true, "Timeout ID is required" ]
     },
 
-    player1: Object,
-    player2: Object,
+    player1: String,
+    player2: String,
 
     turn: {
         type: Number,

@@ -14,7 +14,7 @@ module.exports = {
     async execute(interaction, client){
         const user = interaction.options.getUser("user");
 
-        if(user.id === interaction.member.id) return await interaction.editReply({
+        if(user?.id === interaction.member.id) return await interaction.editReply({
             embeds: [
                 new EmbedBuilder()
                     .setTitle("Invalid User")
@@ -98,7 +98,7 @@ module.exports = {
             timeout_id: timeout,
 
             player1: interaction.user.id,
-            player2: user.id,
+            player2: user?.id || "bot",
 
             turn: 1,
             board: [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -123,7 +123,9 @@ module.exports = {
             clearTimeout(data.timeout_id);
 
             const player1 = await client.users.fetch(data.player1);
-            const player2 = await client.users.fetch(data.player2);
+            let player2 = "bot";
+
+            if(data.player2 != "bot") player2 = await client.users.fetch(data.player2);
 
             //Check if someone already played that spot
             if(data.board[buttonID] != 0) return await interaction.reply({
@@ -143,11 +145,11 @@ module.exports = {
                 data.board[buttonID] = 1;
                 data.turn = 2;
 
-                //Check if player 1 has won
-                const checkPlayer1Victory = checkWinner(data.board, 1);
-                if(checkPlayer1Victory === true) return endGame(`🎉 ${player1.username} Won! 🎉`);
+                //Check Winner
+                if(checkWinner(data.board, 1) === true)
+                    return endGame(`🎉 ${player1.username} Won! 🎉`, data);
 
-                embedTitle = `🎲 ${player2.username}'s Turn 🎲`;
+                embedTitle = `🎲 ${player2.username || "Bot"}'s Turn 🎲`;
             }
 
             else if(data.turn == 2 && interaction.member.id == data.player2){
@@ -156,8 +158,8 @@ module.exports = {
                 data.turn = 1;
 
                 //Check if player 2 has won
-                const checkPlayer2Victory = checkWinner(data.board, 2);
-                if(checkPlayer2Victory === true) return endGame(`🎉 ${player2.username} Won! 🎉`);
+                if(checkWinner(data.board, 2) === true)
+                    return endGame(`🎉 ${player2.username || "Bot"} Won! 🎉`, data);
 
                 embedTitle = `🎲 ${player1.username}'s Turn 🎲`;
             }
@@ -173,11 +175,76 @@ module.exports = {
                 ephemeral: true
             })
 
+            if(player2 === "bot"){
+                let newPos;
+                generatePos();
+
+                function generatePos(){
+                    newPos = Math.floor(Math.random() * 8);
+                }
+
+                while(data.board[newPos] != 0) generatePos();
+
+                setTimeout(async () => {
+                    data.board[newPos] = 2;
+                    data.turn = 1;
+
+                    //Check if the bot has won
+                    if(checkWinner(data.board, 2) === true){
+                        let components = [];
+                        for(let i = 0; i < 9; i += 3){
+                            components.push(
+                                new ActionRowBuilder()
+                                    .addComponents(
+                                        checkBtnStat(i, data, true),
+                                        checkBtnStat(i + 1, data, true),
+                                        checkBtnStat(i + 2, data, true)
+                                )
+                            );
+                        }
+
+                        await data.deleteOne({ message_id: interaction.message.id });
+
+                        return await interaction.editReply({
+                            embeds: [
+                                new EmbedBuilder()
+                                    .setTitle("🎉 Bot Won! 🎉")
+                                    .setColor(0x3ded97)
+                            ],
+                            components: components
+                        })
+                    }
+
+                    let components = [];
+                    for(let i = 0; i < 9; i += 3){
+                        components.push(
+                            new ActionRowBuilder()
+                                .addComponents(
+                                    checkBtnStat(i, data, false),
+                                    checkBtnStat(i + 1, data, false),
+                                    checkBtnStat(i + 2, data, false)
+                            )
+                        );
+                    }
+
+                    await interaction.editReply({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setTitle(`🎲 ${player1.username}'s Turn 🎲`)
+                                .setColor(0x3ded97)
+                        ],
+                        components: components
+                    })
+
+                    await data.save();
+                }, 1500)
+            }
+            
             //Check if there is a tie
             const player1Tie = checkWinner(data.board, 1);
             const player2Tie = checkWinner(data.board, 2);
             if(player1Tie === "tie" && player2Tie === "tie")
-                return endGame("🎉 Tie! 🎉");
+                return endGame("🎉 Tie! 🎉", data);
 
             //Nothing has been triggered! Continue the game
             return reloadMessage(embedTitle, data, interaction);
@@ -219,31 +286,14 @@ module.exports = {
         }
 
         async function reloadMessage(title, data, interaction){
-            function checkBtnStat(num){
-                if(data.board[num] == 0) return new ButtonBuilder()
-                    .setCustomId(`tic-tac-${num + 1}`)
-                    .setEmoji("⬜")
-                    .setStyle(ButtonStyle.Primary);
-    
-                if(data.board[num] == 1) return new ButtonBuilder()
-                    .setCustomId(`tic-tac-${num + 1}`)
-                    .setEmoji("⭕")
-                    .setStyle(ButtonStyle.Success);
-    
-                if(data.board[num] == 2) return new ButtonBuilder()
-                    .setCustomId(`tic-tac-${num + 1}`)
-                    .setEmoji("❌")
-                    .setStyle(ButtonStyle.Danger);
-            }
-    
             let components = [];
             for(let i = 0; i < 9; i += 3){
                 components.push(
                     new ActionRowBuilder()
                         .addComponents(
-                            checkBtnStat(i),
-                            checkBtnStat(i + 1),
-                            checkBtnStat(i + 2)
+                            checkBtnStat(i, data, false),
+                            checkBtnStat(i + 1, data, false),
+                            checkBtnStat(i + 2, data, false)
                     )
                 );
             }
@@ -259,7 +309,9 @@ module.exports = {
 
             const timeout = setTimeout(async () => {
                 const player1 = await client.users.fetch(data.player1);
-                const player2 = await client.users.fetch(data.player2);
+                let player2 = "bot";
+
+                if(data.player2 != "bot") player2 = await client.users.fetch(data.player2);
     
                 if(data.turn == 1) return await interaction.update({
                     embeds: [
@@ -271,7 +323,7 @@ module.exports = {
                     components: []
                 })
     
-                if(data.turn == 2) return await interaction.editReply({
+                if(data.turn == 2) return await interaction.update({
                     embeds: [
                         new EmbedBuilder()
                             .setTitle(`🎉 ${player2.username} Won By Default 🎉`)
@@ -288,7 +340,27 @@ module.exports = {
             data.save();
         }
 
-        async function endGame(result){
+        function checkBtnStat(num, data, disabled){
+            if(data.board[num] == 0) return new ButtonBuilder()
+                .setCustomId(`tic-tac-${num + 1}`)
+                .setEmoji("⬜")
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(disabled);
+
+            if(data.board[num] == 1) return new ButtonBuilder()
+                .setCustomId(`tic-tac-${num + 1}`)
+                .setEmoji("⭕")
+                .setStyle(ButtonStyle.Success)
+                .setDisabled(disabled);
+
+            if(data.board[num] == 2) return new ButtonBuilder()
+                .setCustomId(`tic-tac-${num + 1}`)
+                .setEmoji("❌")
+                .setStyle(ButtonStyle.Danger)
+                .setDisabled(disabled);
+        }
+
+        async function endGame(result, data){
             Model.deleteOne({ message_id: interaction.message.id }, async err => {
                 if(err){
                     await interaction.update({
@@ -305,13 +377,25 @@ module.exports = {
                 }
             })
 
+            let components = [];
+            for(let i = 0; i < 9; i += 3){
+                components.push(
+                    new ActionRowBuilder()
+                        .addComponents(
+                            checkBtnStat(i, data, true),
+                            checkBtnStat(i + 1, data, true),
+                            checkBtnStat(i + 2, data, true)
+                    )
+                );
+            }
+
             await interaction.update({
                 embeds: [
                     new EmbedBuilder()
                         .setTitle(result)
                         .setColor(0x3ded97)
                 ],
-                components: []
+                components: components
             })
 
             await Model.deleteOne({ message_id: interaction.message.id });
