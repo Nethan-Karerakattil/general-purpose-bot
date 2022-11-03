@@ -209,6 +209,7 @@ module.exports = {
                             embeds: [
                                 new EmbedBuilder()
                                     .setTitle("🎉 Bot Won! 🎉")
+                                    .setFooter({ text: "Created By Strange Cat#6205" })
                                     .setColor(0x3ded97)
                             ],
                             components: components
@@ -318,6 +319,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle(`🎉 ${player1.username} Won By Default 🎉`)
                             .setDescription(`${player2.username} did not respond in time`)
+                            .setFooter({ text: "Created By Strange Cat#6205" })
                             .setColor(0x3ded97)
                     ],
                     components: []
@@ -328,6 +330,7 @@ module.exports = {
                         new EmbedBuilder()
                             .setTitle(`🎉 ${player2.username} Won By Default 🎉`)
                             .setDescription(`${player1.username} did not respond in time`)
+                            .setFooter({ text: "Created By Strange Cat#6205" })
                             .setColor(0x3ded97)
                     ],
                     components: []
