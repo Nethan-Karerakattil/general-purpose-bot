@@ -24,7 +24,7 @@ module.exports = {
                     embeds: [
                         new EmbedBuilder()
                             .setTitle("Something went wrong")
-                            .setDescription("Something went wrong when trying to execute this command")
+                            .setDescription("Something went wrong when trying to execute this interaction")
                     ]
                 })
             }
@@ -44,9 +44,22 @@ module.exports = {
                     embeds: [
                         new EmbedBuilder()
                             .setTitle("Something went wrong.")
-                            .setDescription("Something went wrong when trying to execute this command")
-                    ]
+                            .setDescription("Something went wrong when trying to execute this interaction")
+                    ],
+                    ephemeral: true
                 })
+            }
+        }else if (interaction.isAutocomplete()){
+            const { commands } = client;
+            const { commandName } = interaction;
+            const command = commands.get(commandName);
+
+            if (!command) return console.log("No match found");
+    
+            try {
+                await command.autocomplete(interaction, client);
+            } catch (error) {
+                return console.log(error);
             }
         }
     }
