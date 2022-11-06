@@ -51,6 +51,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle(`${interaction.user.username} says: ${message}`)
                     .setDescription(`**Message came from:-**\nServer Name: ${interaction.guild.name}\nChannel Name: ${interaction.channel.name}`)
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x4e5d94)
             ],
             components: [
@@ -94,6 +95,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Successful!")
                     .setDescription("You sent the message")
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x3ded97)
             ]
         })

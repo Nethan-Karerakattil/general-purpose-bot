@@ -5,7 +5,7 @@ module.exports = {
         name: "tic-tac-1"
     },
 
-    async execute(interaction, client){
+    execute(interaction, client){
         mainFile.hanldeClicks(interaction, client, 0);
     }
 }
