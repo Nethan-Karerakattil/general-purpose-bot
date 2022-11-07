@@ -24,7 +24,8 @@ module.exports = {
                 { name: "Addition", value: "+" },
                 { name: "Substraction", value: "-" },
                 { name: "Division", value: "/" },
-                { name: "Multiplication", value: "x" }
+                { name: "Multiplication", value: "x" },
+                { name: "Power", value: "^"},
             )),
 
     async execute(interaction, client){
@@ -54,6 +55,9 @@ module.exports = {
 
                 case "x":
                     return termOne * termTwo;
+
+                case "^":
+                    return Math.pow(termOne, termTwo);
             }
         }
     }
