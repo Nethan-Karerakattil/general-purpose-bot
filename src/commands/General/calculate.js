@@ -35,7 +35,8 @@ module.exports = {
         await interaction.editReply({
             embeds: [
                 new EmbedBuilder()
-                    .setDescription(`${termOne} ${operation} ${termTwo} = ${calculate()}`)
+                    .setDescription(`**${termOne} ${operation} ${termTwo} = ${calculate()}**`)
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x3ded97)
             ]
         })
