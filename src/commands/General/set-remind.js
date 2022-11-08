@@ -1,4 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const Model = require("../../models/remindModel");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -7,7 +8,8 @@ module.exports = {
 
         .addIntegerOption(option => option
             .setName("hours")
-            .setDescription("When should we remind you?"))
+            .setDescription("When should we remind you?")
+            .setRequired(true))
 
         .addStringOption(option => option
             .setName("message")
@@ -26,7 +28,7 @@ module.exports = {
             ]
         })
 
-        await interaction.editReply({
+        const message = await interaction.editReply({
             embeds: [
                 new EmbedBuilder()
                     .setTitle("Set the reminder!")
@@ -35,13 +37,19 @@ module.exports = {
             ]
         })
 
-        setTimeout(async () => await interaction.user.send({
+        const timeout = setTimeout(async () => await interaction.user.send({
             embeds: [
                 new EmbedBuilder()
                     .setTitle("The reminder is up!")
                     .setDescription(`Message: ${msg}`)
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x3ded97)
             ]
         }), time * 3600000)
+
+        new Model({
+            msg_id: message.id,
+            timeout_id: timeout.id
+        }).save();
     }
 }
