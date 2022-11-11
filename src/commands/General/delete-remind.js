@@ -14,7 +14,7 @@ module.exports = {
     async execute(interaction, client){
         const id = interaction.options.getString("message-id");
         
-        Model.findOne({ msg_id: id }, async (err, data) => {
+        Model.findOne({ msg_id: id, user_id: interaction.member.id }, async (err, data) => {
             if(err) return await interaction.editReply({
                 embeds: [
                     new EmbedBuilder()

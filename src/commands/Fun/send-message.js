@@ -49,7 +49,7 @@ module.exports = {
         const sentMessage = await channel.send({
             embeds: [
                 new EmbedBuilder()
-                    .setTitle(`${interaction.user.username} says: ${message}`)
+                    .setTitle(`${interaction.user.tag} says: ${message}`)
                     .setDescription(`**Message came from:-**\nServer Name: ${interaction.guild.name}\nChannel Name: ${interaction.channel.name}`)
                     .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x4e5d94)
@@ -94,7 +94,7 @@ module.exports = {
             embeds: [
                 new EmbedBuilder()
                     .setTitle("Successful!")
-                    .setDescription("You sent the message")
+                    .setDescription("You sent a message")
                     .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x3ded97)
             ]
