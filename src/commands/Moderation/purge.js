@@ -8,6 +8,7 @@ module.exports = {
         .addIntegerOption(option => option
             .setName("number-of-messages")
             .setDescription("Number of messages to delete")
+            .setMaxValue(100)
             .setRequired(true))
             
         .addBooleanOption(option => option
@@ -29,15 +30,6 @@ module.exports = {
 
         const messages = interaction.options.getInteger("number-of-messages");
         const oldOnly = interaction.options.getBoolean("only-old") || false;
-
-        if(messages >= 100) return await interaction.editReply({
-            embeds: [
-                new EmbedBuilder()
-                    .setTitle("Invalid Input")
-                    .setDescription("The Messages cannot be more than or equal to 100")
-                    .setColor(0xdf2c14)
-            ]
-        })
 
         await interaction.channel.bulkDelete(messages, [ oldOnly ]);
 

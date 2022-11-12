@@ -22,6 +22,7 @@ module.exports = {
         .addStringOption(option => option
             .setName("message")
             .setDescription("Message to send")
+            .setMaxLength(50)
             .setRequired(true)),
 
     async execute(interaction, client){
@@ -33,15 +34,6 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle("Invalid Charector")
                     .setDescription("You cannot use the @ charector in your message")
-                    .setColor(0xdf2c14)
-            ]
-        })
-
-        if(message.length > 50) return await interaction.editReply({
-            embeds: [
-                new EmbedBuilder()
-                    .setTitle("Too many charactors")
-                    .setDescription("The message is too long")
                     .setColor(0xdf2c14)
             ]
         })
