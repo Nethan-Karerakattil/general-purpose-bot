@@ -63,8 +63,8 @@ module.exports = {
 
         //Send Join Message
         const message = await updateJoinMsg("1 Minute Remaining", 0x3ded97);
-        setTimeout(async () => await updateJoinMsg("30 Seconds Remaining", 0xffe800), 30000);
-        setTimeout(async () => await updateJoinMsg("10 Seconds Remaining", 0xdf2c14), 50000);
+        // setTimeout(async () => await updateJoinMsg("30 Seconds Remaining", 0xffe800), 30000);
+        // setTimeout(async () => await updateJoinMsg("10 Seconds Remaining", 0xdf2c14), 50000);
 
         //Insert data into database
         await new Model({
@@ -93,7 +93,7 @@ module.exports = {
 
             //5 Seconds after that, load the 1st round
             setTimeout(async () => await loadRound(), 5000);
-        }, 60000)
+        }, 5000)
 
         async function updateJoinMsg(time, color){
             return await interaction.editReply({
@@ -176,6 +176,32 @@ module.exports = {
         }
 
         async function showResults(){
+            //This function is used to generate buttons
+            const buttons = [
+                new ActionRowBuilder()
+                    .addComponents(
+                        generateButton(0),
+                        generateButton(1),
+                        generateButton(2),
+                        generateButton(3),
+                    )
+            ]
+
+            function generateButton(input){
+                if(response[0].correctAnswer != response[0].incorrectAnswers[input])
+                    return new ButtonBuilder()
+                        .setCustomId(input.toString())
+                        .setDisabled(true)
+                        .setLabel(`Option ${input + 1}`)
+                        .setStyle(ButtonStyle.Danger);
+
+                return new ButtonBuilder()
+                    .setCustomId(input.toString())
+                    .setDisabled(true)
+                    .setLabel(`Option ${input + 1}`)
+                    .setStyle(ButtonStyle.Success);
+            }
+
             //Remove Correct Answer from incorrect answers & display the leaderboard
             response[0].incorrectAnswers.splice(answer, 1);
 
@@ -186,7 +212,7 @@ module.exports = {
                         .setDescription(`**Correct Answer:-**\n    ${response[0].correctAnswer}\n\n**Other Options:-**\n1. ${response[0].incorrectAnswers[0]}\n2. ${response[0].incorrectAnswers[1]}\n3. ${response[0].incorrectAnswers[2]}`)
                         .setColor(0x3ded97)
                 ],
-                components: []
+                components: buttons
             })
 
             //remove the question from the response array
@@ -221,7 +247,8 @@ module.exports = {
                                 .setTitle("Current Leaderboard:-")
                                 .setDescription(leaderboard)
                                 .setColor(0x3ded97)
-                        ]
+                        ],
+                        components: []
                     })
                 }, 5000)
 
