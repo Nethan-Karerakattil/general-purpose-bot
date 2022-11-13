@@ -92,7 +92,7 @@ module.exports = {
                             embeds: [
                                 new EmbedBuilder()
                                     .setTitle("Here are the values that you used in JSON format")
-                                    .setDescription("```" + json.replace(/' +| +'/g, "") + "```\nFor more options, we suggest using the JSON format")
+                                    .setDescription("```" + json + "```\nFor more options, we suggest using the JSON format")
                                     .setColor(0x4e5d94)
                             ]
                         })
@@ -103,7 +103,7 @@ module.exports = {
                         embeds: [
                             new EmbedBuilder()
                                 .setTitle("Here are the values that you used in JSON format")
-                                .setDescription("```" + json.replace(/' +| +'/g, "") + "```")
+                                .setDescription("```" + json + "```")
                                 .setColor(0x4e5d94)
                         ]
                     })
