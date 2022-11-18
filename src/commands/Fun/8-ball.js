@@ -44,6 +44,7 @@ module.exports = {
                 new EmbedBuilder()
                     .setTitle(response)
                     .setDescription(`Question: ${question}`)
+                    .setFooter({ text: "Created By Strange Cat#6205" })
                     .setColor(0x4e5d94)
             ]
         })
